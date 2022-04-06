@@ -78,10 +78,16 @@ def go(config: DictConfig):
             )
 
         if "data_split" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            _ = mlflow.run(
+                f"{config['main']['components_repository']}/train_val_test_split",
+                "main",
+                parameters={
+                    "input": "clean_sample.csv:latest",
+                    "test_size": "0.2",
+                    "random_seed": "1234",
+                    # "stratified_by": "none"
+                },
+            )
 
         if "train_random_forest" in active_steps:
 
@@ -111,4 +117,5 @@ def go(config: DictConfig):
 
 
 if __name__ == "__main__":
+    os.environ["HYDRA_FULL_ERROR"] = "1"
     go()
