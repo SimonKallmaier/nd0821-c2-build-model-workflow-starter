@@ -43,7 +43,7 @@ def go(config: DictConfig):
                 f"{config['main']['components_repository']}/get_data",
                 "main",
                 parameters={
-                    "sample": {config['etl']['sample']},
+                    "sample": config['etl']['sample'],
                     "artifact_name": "sample.csv",
                     "artifact_type": "raw_data",
                     "artifact_description": "Raw file as downloaded"
@@ -55,7 +55,7 @@ def go(config: DictConfig):
                 os.path.join(root_path, "src", "basic_cleaning"),
                 "main",
                 parameters={
-                    "input_artifact": f"{config['etl']['sample']}:latest",
+                    "input_artifact": "sample.csv:latest",
                     "output_artifact": "clean_sample.csv",
                     "output_type": "clean_sample",
                     "output_description": "Data with outliers and null values removed",
